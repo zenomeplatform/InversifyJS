@@ -1,14 +1,16 @@
 import * as ERROR_MSGS from "../constants/error_msgs";
 import { interfaces } from "../interfaces/interfaces";
+//import { Delegates } from "../utils/delegator";
 
 function assertNotUndefinedOrNull(serviceIdentifier: any) {
     if (serviceIdentifier === null)
         throw new Error(ERROR_MSGS.NULL_ARGUMENT);
-    if (serviceIdentifier === undefined) 
+    if (serviceIdentifier === undefined)
         throw new Error(ERROR_MSGS.NULL_ARGUMENT);
 }
 
-class Lookup<T extends interfaces.Clonable<T>> implements interfaces.Lookup<T> {
+class Lookup<T extends interfaces.Clonable<T>>
+implements interfaces.Lookup<T> {
 
     // dictionary used store multiple values for each key <key>
     readonly map = new Map<interfaces.ServiceIdentifier<any>, T[]>()
@@ -78,5 +80,6 @@ class Lookup<T extends interfaces.Clonable<T>> implements interfaces.Lookup<T> {
     }
 
 }
+
 
 export { Lookup };

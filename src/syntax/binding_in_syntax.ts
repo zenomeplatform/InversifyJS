@@ -4,11 +4,9 @@ import { BindingWhenOnSyntax } from "./binding_when_on_syntax";
 
 class BindingInSyntax<T> implements interfaces.BindingInSyntax<T> {
 
-    private _binding: interfaces.Binding<T>;
-
-    public constructor(binding: interfaces.Binding<T>) {
-        this._binding = binding;
-    }
+    constructor(
+        private _binding: interfaces.Binding<T>
+    ) {}
 
     public inRequestScope(): interfaces.BindingWhenOnSyntax<T> {
         this._binding.scope = BindingScopeEnum.Request;
