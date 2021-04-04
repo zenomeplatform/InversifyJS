@@ -1,59 +1,60 @@
 import * as ERROR_MSGS from "../constants/error_msgs";
 import { interfaces } from "../interfaces/interfaces";
 
+function assertNotUndefinedOrNull(serviceIdentifier: any) {
+    if (serviceIdentifier === null)
+        throw new Error(ERROR_MSGS.NULL_ARGUMENT);
+    if (serviceIdentifier === undefined) 
+        throw new Error(ERROR_MSGS.NULL_ARGUMENT);
+}
+
 class Lookup<T extends interfaces.Clonable<T>> implements interfaces.Lookup<T> {
 
     // dictionary used store multiple values for each key <key>
     readonly map = new Map<interfaces.ServiceIdentifier<any>, T[]>()
 
+
     // adds a new entry to map
-    public add(serviceIdentifier: interfaces.ServiceIdentifier<any>, value: T): void {
+    public add(serviceIdentifier: interfaces.ServiceIdentifier<any>, value: T): this {
+        assertNotUndefinedOrNull(serviceIdentifier);
+        assertNotUndefinedOrNull(value);
 
-        if (serviceIdentifier === null || serviceIdentifier === undefined) {
-            throw new Error(ERROR_MSGS.NULL_ARGUMENT);
-        }
+        const entry = this.map.get(serviceIdentifier) || [];
+        entry.push(value);
 
-        if (value === null || value === undefined) {
-            throw new Error(ERROR_MSGS.NULL_ARGUMENT);
-        }
+        this.map.set(serviceIdentifier, entry);
 
-        const entry = this.map.get(serviceIdentifier);
-        if (entry !== undefined) {
-            entry.push(value);
-            this.map.set(serviceIdentifier, entry);
-        } else {
-            this.map.set(serviceIdentifier, [value]);
-        }
+        return this;
     }
 
     // gets the value of a entry by its key (serviceIdentifier)
     public get(serviceIdentifier: interfaces.ServiceIdentifier<any>): T[] {
+        assertNotUndefinedOrNull(serviceIdentifier);
 
-        if (serviceIdentifier === null || serviceIdentifier === undefined) {
-            throw new Error(ERROR_MSGS.NULL_ARGUMENT);
-        }
-
-        const entry = this.map.get(serviceIdentifier);
-
-        if (entry !== undefined) {
-            return entry;
-        } else {
+        if (!this.map.has(serviceIdentifier)) {
             throw new Error(ERROR_MSGS.KEY_NOT_FOUND);
         }
+
+        return this.map.get(serviceIdentifier)!;
     }
 
     // removes a entry from map by its key (serviceIdentifier)
-    public remove(serviceIdentifier: interfaces.ServiceIdentifier<any>): void {
+    public delete(serviceIdentifier: interfaces.ServiceIdentifier<any>): boolean {
+        assertNotUndefinedOrNull(serviceIdentifier);
 
-        if (serviceIdentifier === null || serviceIdentifier === undefined) {
-            throw new Error(ERROR_MSGS.NULL_ARGUMENT);
-        }
-
-        if (!this.map.delete(serviceIdentifier)) {
+        if (!this.map.has(serviceIdentifier)) {
             throw new Error(ERROR_MSGS.KEY_NOT_FOUND);
         }
 
+        return this.map.delete(serviceIdentifier)
     }
+
+    // returns true if map contains a key (serviceIdentifier)
+    public has(serviceIdentifier: interfaces.ServiceIdentifier<any>): boolean {
+        assertNotUndefinedOrNull(serviceIdentifier);
+        return this.map.has(serviceIdentifier);
+    }
+
 
     public removeByCondition(condition: (item: T) => boolean): void {
         this.map.forEach((entries, key) => {
@@ -66,26 +67,13 @@ class Lookup<T extends interfaces.Clonable<T>> implements interfaces.Lookup<T> {
         });
     }
 
-    // returns true if map contains a key (serviceIdentifier)
-    public hasKey(serviceIdentifier: interfaces.ServiceIdentifier<any>): boolean {
-
-        if (serviceIdentifier === null || serviceIdentifier === undefined) {
-            throw new Error(ERROR_MSGS.NULL_ARGUMENT);
-        }
-
-        return this.map.has(serviceIdentifier);
-    }
-
     // returns a new Lookup instance; note: this is not a deep clone, only Lookup related data structure (dictionary) is
     // cloned, content remains the same
     public clone(): interfaces.Lookup<T> {
-
         const copy = new Lookup<T>();
-
         this.map.forEach((value, key) => {
             value.forEach((b) => copy.add(key, b.clone()));
         });
-
         return copy;
     }
 

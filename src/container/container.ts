@@ -150,7 +150,7 @@ class Container implements interfaces.Container {
     // Removes a type binding from the registry by its key
     public unbind(serviceIdentifier: interfaces.ServiceIdentifier<any>): void {
         try {
-            this._bindingDictionary.remove(serviceIdentifier);
+            this._bindingDictionary.delete(serviceIdentifier);
         } catch (e) {
             throw new Error(`${ERROR_MSGS.CANNOT_UNBIND} ${getServiceIdentifierAsString(serviceIdentifier)}`);
         }
@@ -163,7 +163,7 @@ class Container implements interfaces.Container {
 
     // Allows to check if there are bindings available for serviceIdentifier
     public isBound(serviceIdentifier: interfaces.ServiceIdentifier<any>): boolean {
-        let bound = this._bindingDictionary.hasKey(serviceIdentifier);
+        let bound = this._bindingDictionary.has(serviceIdentifier);
         if (!bound && this.parent) {
             bound = this.parent.isBound(serviceIdentifier);
         }
@@ -179,7 +179,7 @@ class Container implements interfaces.Container {
         let bound = false;
 
         // verify if there are bindings available for serviceIdentifier on current binding dictionary
-        if (this._bindingDictionary.hasKey(serviceIdentifier)) {
+        if (this._bindingDictionary.has(serviceIdentifier)) {
             const bindings = this._bindingDictionary.get(serviceIdentifier);
             const request = createMockRequest(this, serviceIdentifier, key, value);
             bound = bindings.some((b) => b.constraint(request));

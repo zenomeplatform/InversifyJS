@@ -211,7 +211,7 @@ function getBindings<T>(
     let bindings: interfaces.Binding<T>[] = [];
     const bindingDictionary: interfaces.Lookup<interfaces.Binding<any>> = getBindingDictionary(container);
 
-    if (bindingDictionary.hasKey(serviceIdentifier)) {
+    if (bindingDictionary.has(serviceIdentifier)) {
 
         bindings = bindingDictionary.get(serviceIdentifier);
 
