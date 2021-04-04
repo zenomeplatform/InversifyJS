@@ -3,11 +3,10 @@ import { id } from "../utils/id";
 
 export class ContainerModule implements interfaces.ContainerModule {
 
-    public id: number;
+    public id: number = id();
     public registry: interfaces.ContainerModuleCallBack;
 
     public constructor(registry: interfaces.ContainerModuleCallBack) {
-        this.id = id();
         this.registry = registry;
     }
 
@@ -15,11 +14,10 @@ export class ContainerModule implements interfaces.ContainerModule {
 
 export class AsyncContainerModule implements interfaces.AsyncContainerModule {
 
-    public id: number;
+    public id: number = id();
     public registry: interfaces.AsyncContainerModuleCallBack;
 
     public constructor(registry: interfaces.AsyncContainerModuleCallBack) {
-        this.id = id();
         this.registry = registry;
     }
 

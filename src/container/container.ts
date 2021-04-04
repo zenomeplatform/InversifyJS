@@ -12,6 +12,20 @@ import { getServiceIdentifierAsString } from "../utils/serialization";
 import { ContainerSnapshot } from "./container_snapshot";
 import { Lookup } from "./lookup";
 
+
+function copyDictionary(
+    origin: interfaces.Lookup<interfaces.Binding<any>>,
+    destination: interfaces.Lookup<interfaces.Binding<any>>
+) {
+    origin.traverse((key, bindings) => {
+        for (const binding of bindings) {
+            const copy = binding.clone()
+            destination.add(key, copy);
+        }
+    });
+
+}
+
 class Container implements interfaces.Container {
 
     public id: number;
@@ -33,18 +47,6 @@ class Container implements interfaces.Container {
             .map((targetContainer) => getBindingDictionary(targetContainer));
         const bindingDictionary: interfaces.Lookup<interfaces.Binding<any>> = getBindingDictionary(container);
 
-        function copyDictionary(
-            origin: interfaces.Lookup<interfaces.Binding<any>>,
-            destination: interfaces.Lookup<interfaces.Binding<any>>
-        ) {
-
-            origin.traverse((key, value) => {
-                value.forEach((binding) => {
-                    destination.add(binding.serviceIdentifier, binding.clone());
-                });
-            });
-
-        }
 
         targetContainers.forEach((targetBindingDictionary) => {
             copyDictionary(targetBindingDictionary, bindingDictionary);

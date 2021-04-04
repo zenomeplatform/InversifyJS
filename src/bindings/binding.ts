@@ -37,7 +37,7 @@ class Binding<T> implements interfaces.Binding<T> {
     public provider: interfaces.ProviderCreator<T> | null = null;
 
     // A constraint used to limit the contexts in which this binding is applicable
-    public constraint: (request: interfaces.Request) => boolean = (request: interfaces.Request) => true;
+    public constraint: (request: interfaces.Request) => boolean = request => true;
 
     // On activation handler (invoked just before an instance is added to cache and injected)
     public onActivation: ((context: interfaces.Context, injectable: T) => T) | null = null;
