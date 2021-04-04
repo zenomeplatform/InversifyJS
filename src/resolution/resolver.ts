@@ -57,15 +57,13 @@ const _resolveRequest = (requestScope: interfaces.RequestScope) =>
         }
 
         const binding = bindings[0];
-        const isSingleton = binding.scope === BindingScopeEnum.Singleton;
-        const isRequestSingleton = binding.scope === BindingScopeEnum.Request;
 
-        if (isSingleton && binding.activated) {
+        if (binding.scope === BindingScopeEnum.Singleton && binding.activated) {
             return binding.cache;
         }
 
         if (
-            isRequestSingleton &&
+            binding.scope === BindingScopeEnum.Request &&
             requestScope !== null &&
             requestScope.has(binding.id)
         ) {
@@ -79,7 +77,7 @@ const _resolveRequest = (requestScope: interfaces.RequestScope) =>
             result = binding.cache;
             binding.activated = true;
         } else if (binding.type === BindingTypeEnum.Constructor) {
-            result = binding.implementationType;
+            result = binding.newable;
         } else if (binding.type === BindingTypeEnum.DynamicValue && binding.dynamicValue !== null) {
             result = invokeFactory(
                 "toDynamicValue",
@@ -98,9 +96,9 @@ const _resolveRequest = (requestScope: interfaces.RequestScope) =>
                 binding.serviceIdentifier,
                 () => (binding.provider as interfaces.Provider<any>)(request.parentContext)
             );
-        } else if (binding.type === BindingTypeEnum.Instance && binding.implementationType !== null) {
+        } else if (binding.type === BindingTypeEnum.Instance && binding.newable !== null) {
             result = resolveInstance(
-                binding.implementationType,
+                binding.newable,
                 childRequests,
                 _resolveRequest(requestScope)
             );
@@ -117,13 +115,13 @@ const _resolveRequest = (requestScope: interfaces.RequestScope) =>
         }
 
         // store in cache if scope is singleton
-        if (isSingleton) {
+        if (binding.scope === BindingScopeEnum.Singleton) {
             binding.cache = result;
             binding.activated = true;
         }
 
         if (
-            isRequestSingleton &&
+            binding.scope === BindingScopeEnum.Request &&
             requestScope !== null &&
             !requestScope.has(binding.id)
         ) {

@@ -16,7 +16,7 @@ class Binding<T> implements interfaces.Binding<T> {
     public serviceIdentifier: interfaces.ServiceIdentifier<T>;
 
     // The constructor of a class which must implement T
-    public implementationType: interfaces.Newable<T> | null = null;
+    public newable: interfaces.Newable<T> | null = null;
 
     // Cache used to allow singleton scope and BindingType.ConstantValue bindings
     public cache: T | null = null;
@@ -58,16 +58,18 @@ class Binding<T> implements interfaces.Binding<T> {
         }
 
         const clone = new Binding(this.serviceIdentifier);
-        clone.activated = false;
-        clone.implementationType = this.implementationType;
-        clone.dynamicValue = this.dynamicValue;
+
         clone.scope = this.scope;
         clone.type = this.type;
+
+        clone.newable = this.newable;
+        clone.dynamicValue = this.dynamicValue;
         clone.factory = this.factory;
         clone.provider = this.provider;
+
         clone.constraint = this.constraint;
         clone.onActivation = this.onActivation;
-        clone.cache = this.cache;
+
         return clone;
     }
 

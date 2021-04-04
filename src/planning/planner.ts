@@ -177,18 +177,18 @@ function _createSubRequests(
             subChildRequest = childRequest;
         }
 
-        if (binding.type === BindingTypeEnum.Instance && binding.implementationType !== null) {
+        if (binding.type === BindingTypeEnum.Instance && binding.newable !== null) {
 
-            const dependencies = getDependencies(metadataReader, binding.implementationType);
+            const dependencies = getDependencies(metadataReader, binding.newable);
 
             if (!context.container.options.skipBaseClassChecks) {
                 // Throw if a derived class does not implement its constructor explicitly
                 // We do this to prevent errors when a base class (parent) has dependencies
                 // and one of the derived classes (children) has no dependencies
-                const baseClassDependencyCount = getBaseClassDependencyCount(metadataReader, binding.implementationType);
+                const baseClassDependencyCount = getBaseClassDependencyCount(metadataReader, binding.newable);
 
                 if (dependencies.length < baseClassDependencyCount) {
-                    const error = ERROR_MSGS.ARGUMENTS_LENGTH_MISMATCH(getFunctionName(binding.implementationType));
+                    const error = ERROR_MSGS.ARGUMENTS_LENGTH_MISMATCH(getFunctionName(binding.newable));
                     throw new Error(error);
                 }
             }

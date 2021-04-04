@@ -35,8 +35,8 @@ function listRegisteredBindingsForServiceIdentifier(
             let name = "Object";
 
             // Use function name if available
-            if (binding.implementationType !== null) {
-                name = getFunctionName(binding.implementationType);
+            if (binding.newable !== null) {
+                name = getFunctionName(binding.newable);
             }
 
             registeredBindingsList = `${registeredBindingsList}\n ${name}`;

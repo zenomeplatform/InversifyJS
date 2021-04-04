@@ -124,12 +124,12 @@ describe("BindingWhenSyntax", () => {
         const context = new Context(new Container());
 
         const samuraiBinding = Binding.of<Samurai>("Samurai", BindingScopeEnum.Transient);
-        samuraiBinding.implementationType = Samurai;
+        samuraiBinding.newable = Samurai;
         const samuraiTarget = new Target(TargetTypeEnum.Variable, "", "Samurai");
         const samuraiRequest = new Request("Samurai", context, null, samuraiBinding, samuraiTarget);
 
         const ninjaBinding = Binding.of<Ninja>("Ninja", BindingScopeEnum.Transient);
-        ninjaBinding.implementationType = Ninja;
+        ninjaBinding.newable = Ninja;
         const ninjaTarget = new Target(TargetTypeEnum.Variable, "", "Ninja");
         const ninjaRequest = new Request("Ninja", context, null, ninjaBinding, ninjaTarget);
 
@@ -206,7 +206,7 @@ describe("BindingWhenSyntax", () => {
         }
 
         const samuraiBinding = Binding.of<Samurai>("Samurai", BindingScopeEnum.Transient);
-        samuraiBinding.implementationType = Samurai;
+        samuraiBinding.newable = Samurai;
 
         const context = new Context(new Container());
 
@@ -214,7 +214,7 @@ describe("BindingWhenSyntax", () => {
         const samuraiRequest = new Request("Samurai", context, null, samuraiBinding, samuraiTarget);
         const ninjaBinding = Binding.of<Ninja>("Ninja", BindingScopeEnum.Transient);
 
-        ninjaBinding.implementationType = Ninja;
+        ninjaBinding.newable = Ninja;
 
         const ninjaTarget = new Target(TargetTypeEnum.ConstructorArgument, "", "Ninja", "chinese");
         const ninjaRequest = new Request("Ninja", context, null, ninjaBinding, ninjaTarget);
@@ -272,13 +272,13 @@ describe("BindingWhenSyntax", () => {
         const context = new Context(new Container());
 
         const samuraiBinding = Binding.of<Samurai>("Samurai", BindingScopeEnum.Transient);
-        samuraiBinding.implementationType = Samurai;
+        samuraiBinding.newable = Samurai;
 
         const samuraiTarget = new Target(TargetTypeEnum.ConstructorArgument, "", "Samurai", new Metadata("sneaky", false));
         const samuraiRequest = new Request("Samurai", context, null, samuraiBinding, samuraiTarget);
 
         const ninjaBinding = Binding.of<Ninja>("Ninja", BindingScopeEnum.Transient);
-        ninjaBinding.implementationType = Ninja;
+        ninjaBinding.newable = Ninja;
         const ninjaTarget = new Target(TargetTypeEnum.ConstructorArgument, "", "Ninja", new Metadata("sneaky", true));
         const ninjaRequest = new Request("Ninja", context, null, ninjaBinding, ninjaTarget);
 
@@ -371,10 +371,10 @@ describe("BindingWhenSyntax", () => {
 
         // Samurai
         const samuraiMasterBinding = Binding.of<Samurai>("Samurai", BindingScopeEnum.Transient);
-        samuraiMasterBinding.implementationType = SamuraiMaster;
+        samuraiMasterBinding.newable = SamuraiMaster;
 
         const samuraiStudentBinding = Binding.of<Samurai>("Samurai", BindingScopeEnum.Transient);
-        samuraiStudentBinding.implementationType = SamuraiStudent;
+        samuraiStudentBinding.newable = SamuraiStudent;
 
         const samuraiTarget = new Target(TargetTypeEnum.ConstructorArgument, "", "Samurai", new Metadata("sneaky", false));
         const samuraiMasterRequest = new Request("Samurai", context, null, samuraiMasterBinding, samuraiTarget);
@@ -382,10 +382,10 @@ describe("BindingWhenSyntax", () => {
 
         // Ninja
         const ninjaMasterBinding = Binding.of<Ninja>("Ninja", BindingScopeEnum.Transient);
-        ninjaMasterBinding.implementationType = NinjaMaster;
+        ninjaMasterBinding.newable = NinjaMaster;
 
         const ninjaStudentBinding = Binding.of<Ninja>("Ninja", BindingScopeEnum.Transient);
-        ninjaStudentBinding.implementationType = NinjaStudent;
+        ninjaStudentBinding.newable = NinjaStudent;
 
         const ninjaTarget = new Target(TargetTypeEnum.ConstructorArgument, "", "Ninja", new Metadata("sneaky", true));
         const ninjaMasterRequest = new Request("Ninja", context, null, ninjaMasterBinding, ninjaTarget);
@@ -393,7 +393,7 @@ describe("BindingWhenSyntax", () => {
 
         // Katana
         const katanaBinding = Binding.of<Weapon>("Weapon", BindingScopeEnum.Transient);
-        katanaBinding.implementationType = Katana;
+        katanaBinding.newable = Katana;
         const katanaBindingWhenSyntax = new BindingWhenSyntax<Weapon>(katanaBinding);
         const katanaTarget = new Target(TargetTypeEnum.ConstructorArgument, "katana", "Weapon");
         const ironKatanaRequest = new Request("Weapon", context, samuraiMasterRequest, katanaBinding, katanaTarget);
@@ -401,7 +401,7 @@ describe("BindingWhenSyntax", () => {
 
         // Shuriken
         const shurikenBinding = Binding.of<Weapon>("Weapon", BindingScopeEnum.Transient);
-        shurikenBinding.implementationType = Shuriken;
+        shurikenBinding.newable = Shuriken;
         const shurikenBindingWhenSyntax = new BindingWhenSyntax<Weapon>(shurikenBinding);
         const shurikenTarget = new Target(TargetTypeEnum.ConstructorArgument, "shuriken", "Weapon");
         const ironShurikenRequest = new Request("Weapon", context, ninjaMasterRequest, shurikenBinding, shurikenTarget);

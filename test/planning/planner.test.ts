@@ -312,8 +312,8 @@ describe("Planner", () => {
         expect(actualPlan.rootRequest.childRequests[0].childRequests[0].target.isArray()).eql(true);
         expect(actualPlan.rootRequest.childRequests[0].childRequests[0].serviceIdentifier).eql("Weapon");
         expect(actualPlan.rootRequest.childRequests[0].childRequests[0].bindings[0].serviceIdentifier).eql("Weapon");
-        const shurikenImplementationType: any = actualPlan.rootRequest.childRequests[0].childRequests[0].bindings[0].implementationType;
-        expect(shurikenImplementationType.name).eql("Shuriken");
+        const shurikennewable: any = actualPlan.rootRequest.childRequests[0].childRequests[0].bindings[0].newable;
+        expect(shurikennewable.name).eql("Shuriken");
 
         expect(actualPlan.rootRequest.childRequests[0].childRequests[1].serviceIdentifier).eql(weaponId);
         expect(actualPlan.rootRequest.childRequests[0].childRequests[1].target.name.value()).eql("weapons");
@@ -321,8 +321,8 @@ describe("Planner", () => {
         expect(actualPlan.rootRequest.childRequests[0].childRequests[1].target.isArray()).eql(true);
         expect(actualPlan.rootRequest.childRequests[0].childRequests[1].serviceIdentifier).eql("Weapon");
         expect(actualPlan.rootRequest.childRequests[0].childRequests[1].bindings[0].serviceIdentifier).eql("Weapon");
-        const katanaImplementationType: any = actualPlan.rootRequest.childRequests[0].childRequests[1].bindings[0].implementationType;
-        expect(katanaImplementationType.name).eql("Katana");
+        const katananewable: any = actualPlan.rootRequest.childRequests[0].childRequests[1].bindings[0].newable;
+        expect(katananewable.name).eql("Katana");
 
     });
 

@@ -10,7 +10,7 @@ describe("Binding", () => {
     const fooIdentifier = "FooInterface";
     const fooBinding =  Binding.of<Stubs.FooInterface>(fooIdentifier, BindingScopeEnum.Transient);
     expect(fooBinding.serviceIdentifier).eql(fooIdentifier);
-    expect(fooBinding.implementationType).eql(null);
+    expect(fooBinding.newable).eql(null);
     expect(fooBinding.cache).eql(null);
     expect(fooBinding.scope).eql(BindingScopeEnum.Transient);
     expect(fooBinding.id).to.be.a("number");
