@@ -37,20 +37,14 @@ class Container implements interfaces.Container {
     private _metadataReader: interfaces.MetadataReader;
     private _appliedMiddleware: interfaces.Middleware[] = [];
 
-    public static merge(
-      container1: interfaces.Container,
-      container2: interfaces.Container,
-      ...container3: interfaces.Container[]
-    ): interfaces.Container {
+    public static merge(...containers: interfaces.Container[]): interfaces.Container {
         const container = new Container();
-        const targetContainers: interfaces.Lookup<interfaces.Binding<any>>[] = [container1, container2, ...container3]
-            .map((targetContainer) => getBindingDictionary(targetContainer));
         const bindingDictionary: interfaces.Lookup<interfaces.Binding<any>> = getBindingDictionary(container);
 
-
-        targetContainers.forEach((targetBindingDictionary) => {
+        for (const targetContainer of containers) {
+            const targetBindingDictionary = getBindingDictionary(targetContainer)
             copyDictionary(targetBindingDictionary, bindingDictionary);
-        });
+        }
 
         return container;
     }
