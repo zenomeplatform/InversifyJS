@@ -232,7 +232,6 @@ namespace interfaces {
         removeByCondition(condition: (item: T) => boolean): void;
         hasKey(serviceIdentifier: ServiceIdentifier<any>): boolean;
         clone(): Lookup<T>;
-        traverse(func: (key: interfaces.ServiceIdentifier<any>, value: T[]) => void): void;
     }
 
     export interface BindingOnSyntax<T> {

@@ -89,12 +89,6 @@ class Lookup<T extends interfaces.Clonable<T>> implements interfaces.Lookup<T> {
         return copy;
     }
 
-    public traverse(func: (key: interfaces.ServiceIdentifier<any>, value: T[]) => void): void {
-        this.map.forEach((value, key) => {
-            func(key, value);
-        });
-    }
-
 }
 
 export { Lookup };

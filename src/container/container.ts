@@ -17,7 +17,7 @@ function copyDictionary(
     origin: interfaces.Lookup<interfaces.Binding<any>>,
     destination: interfaces.Lookup<interfaces.Binding<any>>
 ) {
-    origin.traverse((key, bindings) => {
+    origin.map.forEach((bindings, key) => {
         for (const binding of bindings) {
             const copy = binding.clone()
             destination.add(key, copy);
@@ -62,7 +62,7 @@ class Container implements interfaces.Container {
             options.defaultScope !== BindingScopeEnum.Transient &&
             options.defaultScope !== BindingScopeEnum.Request
         ) {
-            throw new Error(`${ERROR_MSGS.CONTAINER_OPTIONS_INVALID_DEFAULT_SCOPE}`);
+            throw new Error(ERROR_MSGS.CONTAINER_OPTIONS_INVALID_DEFAULT_SCOPE);
         }
 
         if (options.autoBindInjectable === undefined) {
@@ -70,7 +70,7 @@ class Container implements interfaces.Container {
         } else if (
             typeof options.autoBindInjectable !== "boolean"
         ) {
-            throw new Error(`${ERROR_MSGS.CONTAINER_OPTIONS_INVALID_AUTO_BIND_INJECTABLE}`);
+            throw new Error(ERROR_MSGS.CONTAINER_OPTIONS_INVALID_AUTO_BIND_INJECTABLE);
         }
 
         if (options.skipBaseClassChecks === undefined) {
@@ -78,7 +78,7 @@ class Container implements interfaces.Container {
         } else if (
             typeof options.skipBaseClassChecks !== "boolean"
         ) {
-            throw new Error(`${ERROR_MSGS.CONTAINER_OPTIONS_INVALID_SKIP_BASE_CHECK}`);
+            throw new Error(ERROR_MSGS.CONTAINER_OPTIONS_INVALID_SKIP_BASE_CHECK);
         }
 
         this.options = {
