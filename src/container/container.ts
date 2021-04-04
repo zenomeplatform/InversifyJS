@@ -265,11 +265,11 @@ class Container implements interfaces.Container {
 
     private _getContainerModuleHelpersFactory() {
 
-        const setModuleId = (bindingToSyntax: any, moduleId: number) => {
+        const setModuleId = (bindingToSyntax: any, moduleId: number|string) => {
             bindingToSyntax._binding.moduleId = moduleId;
         };
 
-        const getBindFunction = (moduleId: number) =>
+        const getBindFunction = (moduleId: number|string) =>
             (serviceIdentifier: interfaces.ServiceIdentifier<any>) => {
                 const _bind = this.bind.bind(this);
                 const bindingToSyntax = _bind(serviceIdentifier);
@@ -277,19 +277,19 @@ class Container implements interfaces.Container {
                 return bindingToSyntax;
             };
 
-        const getUnbindFunction = (moduleId: number) =>
+        const getUnbindFunction = (moduleId: number|string) =>
             (serviceIdentifier: interfaces.ServiceIdentifier<any>) => {
                 const _unbind = this.unbind.bind(this);
                 _unbind(serviceIdentifier);
             };
 
-        const getIsboundFunction = (moduleId: number) =>
+        const getIsboundFunction = (moduleId: number|string) =>
             (serviceIdentifier: interfaces.ServiceIdentifier<any>) => {
                 const _isBound = this.isBound.bind(this);
                 return _isBound(serviceIdentifier);
             };
 
-        const getRebindFunction = (moduleId: number) =>
+        const getRebindFunction = (moduleId: number|string) =>
             (serviceIdentifier: interfaces.ServiceIdentifier<any>) => {
                 const _rebind = this.rebind.bind(this);
                 const bindingToSyntax = _rebind(serviceIdentifier);
@@ -297,7 +297,7 @@ class Container implements interfaces.Container {
                 return bindingToSyntax;
             };
 
-        return (mId: number) => ({
+        return (mId: number|string) => ({
             bindFunction: getBindFunction(mId),
             isboundFunction: getIsboundFunction(mId),
             rebindFunction: getRebindFunction(mId),

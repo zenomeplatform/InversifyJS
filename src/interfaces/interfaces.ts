@@ -44,7 +44,7 @@ namespace interfaces {
 
     export interface Binding<T> extends Clonable<Binding<T>> {
         id: number;
-        moduleId: number;
+        moduleId: number|string;
         activated: boolean;
         serviceIdentifier: ServiceIdentifier<T>;
         constraint: ConstraintFunction;
@@ -196,12 +196,12 @@ namespace interfaces {
     export type IsBound = <T>(serviceIdentifier: ServiceIdentifier<T>) => boolean;
 
     export interface ContainerModule {
-        id: number;
+        id: number|string;
         registry: ContainerModuleCallBack;
     }
 
     export interface AsyncContainerModule {
-        id: number;
+        id: number|string;
         registry: AsyncContainerModuleCallBack;
     }
 
