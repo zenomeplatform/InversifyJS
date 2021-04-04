@@ -44,7 +44,7 @@ namespace interfaces {
 
     export interface Binding<T> extends Clonable<Binding<T>> {
         id: number;
-        moduleId: string;
+        moduleId: number;
         activated: boolean;
         serviceIdentifier: ServiceIdentifier<T>;
         constraint: ConstraintFunction;

@@ -28,13 +28,13 @@ function copyDictionary(
 
 class Container implements interfaces.Container {
 
-    public id: number;
-    public parent: interfaces.Container | null;
+    public id: number = id();
+    public parent: interfaces.Container | null = null;
     public readonly options: interfaces.ContainerOptions;
-    private _middleware: interfaces.Next | null;
-    private _bindingDictionary: interfaces.Lookup<interfaces.Binding<any>>;
-    private _snapshots: interfaces.ContainerSnapshot[];
-    private _metadataReader: interfaces.MetadataReader;
+    private _middleware: interfaces.Next | null = null;
+    private _bindingDictionary: interfaces.Lookup<interfaces.Binding<any>> = new Lookup<interfaces.Binding<any>>();
+    private _snapshots: interfaces.ContainerSnapshot[] = [];
+    private _metadataReader: interfaces.MetadataReader = new MetadataReader();
     private _appliedMiddleware: interfaces.Middleware[] = [];
 
     public static merge(...containers: interfaces.Container[]): interfaces.Container {
@@ -86,13 +86,6 @@ class Container implements interfaces.Container {
             defaultScope: options.defaultScope,
             skipBaseClassChecks: options.skipBaseClassChecks
         };
-
-        this.id = id();
-        this._bindingDictionary = new Lookup<interfaces.Binding<any>>();
-        this._snapshots = [];
-        this._middleware = null;
-        this.parent = null;
-        this._metadataReader = new MetadataReader();
     }
 
     public load(...modules: interfaces.ContainerModule[]) {
@@ -134,15 +127,11 @@ class Container implements interfaces.Container {
     }
 
     public unload(...modules: interfaces.ContainerModule[]): void {
-
-        const conditionFactory = (expected: any) => (item: interfaces.Binding<any>): boolean =>
-            item.moduleId === expected;
-
-        modules.forEach((module) => {
-            const condition = conditionFactory(module.id);
-            this._bindingDictionary.removeByCondition(condition);
-        });
-
+        for (const module of modules) {
+            this._bindingDictionary.removeByCondition(
+                item => item.moduleId === module.id
+            );
+        }
     }
 
     // Registers a type binding

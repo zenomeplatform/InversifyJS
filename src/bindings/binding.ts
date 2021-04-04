@@ -5,7 +5,7 @@ import { id } from "../utils/id";
 class Binding<T> implements interfaces.Binding<T> {
 
     public id: number = id();
-    public moduleId: string;
+    public moduleId: number;
 
     // Determines weather the bindings has been already activated
     // The activation action takes place when an instance is resolved
