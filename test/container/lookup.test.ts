@@ -98,24 +98,24 @@ describe("Lookup", () => {
       interface Warrior {}
 
       class Ninja implements Warrior {}
-      const ninjaBinding = new Binding(warriorId, BindingScopeEnum.Transient);
+      const ninjaBinding = Binding.of(warriorId, BindingScopeEnum.Transient);
       ninjaBinding.implementationType = Ninja;
       ninjaBinding.moduleId = moduleId1;
 
       class Samurai implements Warrior {}
-      const samuraiBinding = new Binding(warriorId, BindingScopeEnum.Transient);
+      const samuraiBinding = Binding.of(warriorId, BindingScopeEnum.Transient);
       samuraiBinding.implementationType = Samurai;
       samuraiBinding.moduleId = moduleId2;
 
       interface Weapon {}
 
       class Shuriken implements Weapon {}
-      const shurikenBinding = new Binding(weaponId, BindingScopeEnum.Transient);
+      const shurikenBinding = Binding.of(weaponId, BindingScopeEnum.Transient);
       shurikenBinding.implementationType = Shuriken;
       shurikenBinding.moduleId = moduleId1;
 
       class Katana implements Weapon {}
-      const katanaBinding = new Binding(weaponId, BindingScopeEnum.Transient);
+      const katanaBinding = Binding.of(weaponId, BindingScopeEnum.Transient);
       katanaBinding.implementationType = Katana;
       katanaBinding.moduleId = moduleId2;
 

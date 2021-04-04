@@ -42,17 +42,18 @@ class Binding<T> implements interfaces.Binding<T> {
     // On activation handler (invoked just before an instance is added to cache and injected)
     public onActivation: ((context: interfaces.Context, injectable: T) => T) | null = null;
 
-    public constructor(serviceIdentifier: interfaces.ServiceIdentifier<T>, scope?: interfaces.BindingScope) {
+    public constructor(serviceIdentifier: interfaces.ServiceIdentifier<T>) {
         this.serviceIdentifier = serviceIdentifier;
-        if (scope) this.scope = scope;
     }
 
     static of<T>(serviceIdentifier: interfaces.ServiceIdentifier<T>, scope: interfaces.BindingScope) {
-        return new Binding<T>(serviceIdentifier, scope)
+        const binding = new Binding<T>(serviceIdentifier)
+        binding.scope = scope
+        return binding
     }
 
     public clone(): interfaces.Binding<T> {
-        const clone = new Binding(this.serviceIdentifier, this.scope);
+        const clone = Binding.of(this.serviceIdentifier, this.scope);
         clone.activated = (this.scope === BindingScopeEnum.Singleton) ? this.activated : false;
         clone.implementationType = this.implementationType;
         clone.dynamicValue = this.dynamicValue;

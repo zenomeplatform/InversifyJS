@@ -12,7 +12,7 @@ describe("BindingOnSyntax", () => {
         interface Ninja {}
         const ninjaIdentifier = "Ninja";
 
-        const binding = new Binding<Ninja>(ninjaIdentifier, BindingScopeEnum.Transient);
+        const binding = Binding.of<Ninja>(ninjaIdentifier, BindingScopeEnum.Transient);
         const bindingOnSyntax = new BindingOnSyntax<Ninja>(binding);
 
         // cast to any to be able to access private props
@@ -27,7 +27,7 @@ describe("BindingOnSyntax", () => {
         interface Ninja {}
         const ninjaIdentifier = "Ninja";
 
-        const binding = new Binding<Ninja>(ninjaIdentifier, BindingScopeEnum.Transient);
+        const binding = Binding.of<Ninja>(ninjaIdentifier, BindingScopeEnum.Transient);
         const bindingOnSyntax = new BindingOnSyntax<Ninja>(binding);
 
         bindingOnSyntax.onActivation((context: interfaces.Context, ninja: Ninja) => {

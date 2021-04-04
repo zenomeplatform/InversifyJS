@@ -13,7 +13,7 @@ describe("BindingToSyntax", () => {
         interface Ninja {}
         const ninjaIdentifier = "Ninja";
 
-        const binding = new Binding<Ninja>(ninjaIdentifier, BindingScopeEnum.Transient);
+        const binding = Binding.of<Ninja>(ninjaIdentifier, BindingScopeEnum.Transient);
         const bindingToSyntax = new BindingToSyntax<Ninja>(binding);
 
         // cast to any to be able to access private props
@@ -31,8 +31,8 @@ describe("BindingToSyntax", () => {
         class Ninja implements Ninja {}
         const ninjaIdentifier = "Ninja";
 
-        const binding = new Binding<Ninja>(ninjaIdentifier, BindingScopeEnum.Transient);
-        // let bindingWithClassAsId = new Binding<Ninja>(Ninja, BindingScopeEnum.Transient);
+        const binding = Binding.of<Ninja>(ninjaIdentifier, BindingScopeEnum.Transient);
+        // let bindingWithClassAsId = Binding.of<Ninja>(Ninja, BindingScopeEnum.Transient);
         const bindingToSyntax = new BindingToSyntax<Ninja>(binding);
 
         expect(binding.type).eql(BindingTypeEnum.Invalid);
@@ -98,7 +98,7 @@ describe("BindingToSyntax", () => {
         class Ninja implements Ninja {}
         const ninjaIdentifier = "Ninja";
 
-        const binding = new Binding<Ninja>(ninjaIdentifier, BindingScopeEnum.Transient);
+        const binding = Binding.of<Ninja>(ninjaIdentifier, BindingScopeEnum.Transient);
         const bindingToSyntax = new BindingToSyntax<Ninja>(binding);
 
         const f = function () {
