@@ -18,8 +18,11 @@ class Binding<T> implements interfaces.Binding<T> {
     // The constructor of a class which must implement T
     public newable: interfaces.Newable<T> | null = null;
 
-    // Cache used to allow singleton scope and BindingType.ConstantValue bindings
+    // Cache used to allow singleton scope
     public cache: T | null = null;
+
+    // BindingType.ConstantValue bindings
+    public constantValue: T | null = null;
 
     // Cache used to allow BindingType.DynamicValue bindings
     public dynamicValue: ((context: interfaces.Context) => T) | null = null;
@@ -64,6 +67,7 @@ class Binding<T> implements interfaces.Binding<T> {
 
         clone.newable = this.newable;
         clone.dynamicValue = this.dynamicValue;
+        clone.constantValue = this.constantValue;
         clone.factory = this.factory;
         clone.provider = this.provider;
 

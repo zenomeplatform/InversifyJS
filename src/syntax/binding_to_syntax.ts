@@ -16,7 +16,7 @@ class BindingToSyntax<T> implements interfaces.BindingToSyntax<T> {
 
     public toConstantValue(value: T): interfaces.BindingWhenOnSyntax<T> {
         this._binding.type = BindingTypeEnum.ConstantValue;
-        this._binding.cache = value;
+        this._binding.constantValue = value;
         return new BindingWhenOnSyntax<T>(this._binding);
     }
 

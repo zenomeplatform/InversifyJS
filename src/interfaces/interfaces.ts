@@ -56,6 +56,7 @@ namespace interfaces {
         provider: ProviderCreator<any> | null;
         onActivation: ((context: interfaces.Context, injectable: T) => T) | null;
         cache: T | null;
+        constantValue: T | null;
     }
 
     export type Factory<T> = (...args: any[]) => (((...args: any[]) => T) | T);

@@ -49,7 +49,7 @@ describe("BindingToSyntax", () => {
         (bindingToSyntax as any)._binding = binding;
         bindingToSyntax.toConstantValue(new Ninja());
         expect(binding.type).eql(BindingTypeEnum.ConstantValue);
-        expect(binding.cache instanceof Ninja).eql(true);
+        expect(binding.constantValue instanceof Ninja).eql(true);
 
         bindingToSyntax.toDynamicValue((context: interfaces.Context) => new Ninja());
         expect(binding.type).eql(BindingTypeEnum.DynamicValue);
@@ -72,7 +72,7 @@ describe("BindingToSyntax", () => {
         const f = () => "test";
         bindingToSyntax.toFunction(f);
         expect(binding.type).eql(BindingTypeEnum.Function);
-        expect(binding.cache === f).eql(true);
+        expect(binding.constantValue === f).eql(true);
 
         bindingToSyntax.toAutoFactory<Ninja>(ninjaIdentifier);
 
