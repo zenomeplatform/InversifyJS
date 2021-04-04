@@ -3,28 +3,26 @@ import { id } from "../utils/id";
 
 class Request implements interfaces.Request {
 
-    public id: number;
+    public id: number = id();
     public serviceIdentifier: interfaces.ServiceIdentifier<any>;
     public parentContext: interfaces.Context;
     public parentRequest: interfaces.Request | null;
     public bindings: interfaces.Binding<any>[];
-    public childRequests: interfaces.Request[];
+    public childRequests: interfaces.Request[] = [];
     public target: interfaces.Target;
     public requestScope: interfaces.RequestScope;
 
-    public constructor(
+    constructor(
         serviceIdentifier: interfaces.ServiceIdentifier<any>,
         parentContext: interfaces.Context,
         parentRequest: interfaces.Request | null,
         bindings: (interfaces.Binding<any> | interfaces.Binding<any>[]),
         target: interfaces.Target
     ) {
-            this.id = id();
             this.serviceIdentifier = serviceIdentifier;
             this.parentContext = parentContext;
             this.parentRequest = parentRequest;
             this.target = target;
-            this.childRequests = [];
             this.bindings = (Array.isArray(bindings) ? bindings : [bindings]);
 
             // Set requestScope if Request is the root request
