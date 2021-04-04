@@ -51,7 +51,7 @@ describe("Container", () => {
       const container = new Container();
       container.load(warriors, weapons);
 
-      let map: Dictionary = getBindingDictionary(container).getMap();
+      let map: Dictionary = getBindingDictionary(container).map;
       expect(map.has("Ninja")).equal(true);
       expect(map.has("Katana")).equal(true);
       expect(map.has("Shuriken")).equal(true);
@@ -62,14 +62,14 @@ describe("Container", () => {
       const tryGetShuruken = () => { container.get("Shuriken"); };
 
       container.unload(warriors);
-      map = getBindingDictionary(container).getMap();
+      map = getBindingDictionary(container).map;
       expect(map.size).equal(2);
       expect(tryGetNinja).to.throw(ERROR_MSGS.NOT_REGISTERED);
       expect(tryGetKatana).not.to.throw();
       expect(tryGetShuruken).not.to.throw();
 
       container.unload(weapons);
-      map = getBindingDictionary(container).getMap();
+      map = getBindingDictionary(container).map;
       expect(map.size).equal(0);
       expect(tryGetNinja).to.throw(ERROR_MSGS.NOT_REGISTERED);
       expect(tryGetKatana).to.throw(ERROR_MSGS.NOT_REGISTERED);
@@ -88,7 +88,7 @@ describe("Container", () => {
       const container = new Container();
       container.bind<Ninja>(ninjaId).to(Ninja);
 
-      const map: Dictionary = getBindingDictionary(container).getMap();
+      const map: Dictionary = getBindingDictionary(container).map;
       expect(map.size).equal(1);
       expect(map.has(ninjaId)).equal(true);
 
@@ -115,7 +115,7 @@ describe("Container", () => {
       const container = new Container();
       container.bind<Ninja>(ninjaId).to(Ninja);
 
-      const map: Dictionary = getBindingDictionary(container).getMap();
+      const map: Dictionary = getBindingDictionary(container).map;
       expect(map.has(ninjaId)).equal(true);
 
       container.unbind(ninjaId);
@@ -149,14 +149,14 @@ describe("Container", () => {
       container.bind<Ninja>(ninjaId).to(Ninja);
       container.bind<Samurai>(samuraiId).to(Samurai);
 
-      let map: Dictionary = getBindingDictionary(container).getMap();
+      let map: Dictionary = getBindingDictionary(container).map;
 
       expect(map.size).equal(2);
       expect(map.has(ninjaId)).equal(true);
       expect(map.has(samuraiId)).equal(true);
 
       container.unbind(ninjaId);
-      map = getBindingDictionary(container).getMap();
+      map = getBindingDictionary(container).map;
       expect(map.size).equal(1);
 
   });
@@ -180,14 +180,14 @@ describe("Container", () => {
       container.bind<Ninja>(ninjaId).to(Ninja);
       container.bind<Samurai>(samuraiId).to(Samurai);
 
-      let map: Dictionary = getBindingDictionary(container).getMap();
+      let map: Dictionary = getBindingDictionary(container).map;
 
       expect(map.size).equal(2);
       expect(map.has(ninjaId)).equal(true);
       expect(map.has(samuraiId)).equal(true);
 
       container.unbindAll();
-      map = getBindingDictionary(container).getMap();
+      map = getBindingDictionary(container).map;
       expect(map.size).equal(0);
 
   });
@@ -222,7 +222,7 @@ describe("Container", () => {
       container.bind<Warrior>(warriorId).to(Ninja);
       container.bind<Warrior>(warriorId).to(Samurai);
 
-      const dictionary: Dictionary = getBindingDictionary(container).getMap();
+      const dictionary: Dictionary = getBindingDictionary(container).map;
 
       expect(dictionary.size).equal(1);
       dictionary.forEach((value, key) => {
